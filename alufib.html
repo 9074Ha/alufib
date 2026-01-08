@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alufib Interiors Pvt Ltd | Premium Aluminium & Interior Solutions</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { 
+            font-family: 'Inter', sans-serif; 
+            scroll-behavior: smooth;
+            background: #ffffff;
+        }
+        .font-serif { 
+            font-family: 'Playfair Display', serif; 
+        }
+        .bg-primary {
+            background: linear-gradient(135deg, #0d9488 0%, #047857 100%);
+        }
+        .text-primary {
+            color: #0d9488;
+        }
+        .border-primary {
+            border-color: #0d9488;
+        }
+        .hover-lift {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .hover-lift:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(13, 148, 136, 0.15);
+        }
+        .nav-blur {
+            backdrop-filter: blur(10px);
+            background-color: rgba(255, 255, 255, 0.95);
+        }
+        .mobile-menu {
+            transform: translateX(100%);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .mobile-menu.open {
+            transform: translateX(0);
+        }
+        .hero-background {
+            background: linear-gradient(rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.90)),
+                        url('https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=2070');
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            min-height: 100vh;
+        }
+        .section-divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #e5e7eb, transparent);
+        }
+        .map-container {
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+        }
+        .stat-card {
+            background: white;
+            border: 1px solid #e5e7eb;
+            transition: all 0.3s ease;
+        }
+        .stat-card:hover {
+            transform: translateY(-5px);
+            border-color: #0d9488;
+            box-shadow: 0 10px 25px rgba(13, 148, 136, 0.1);
+        }
+        .service-card {
+            background: white;
+            border: 1px solid #e5e7eb;
+            transition: all 0.3s ease;
+        }
+        .service-card:hover {
+            transform: translateY(-8px);
+            border-color: #0d9488;
+            box-shadow: 0 15px 30px rgba(13, 148, 136, 0.1);
+        }
+        .contact-card {
+            background: white;
+            border: 1px solid #e5e7eb;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+        }
+        /* Popup Modal */
+        .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        .popup-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .popup-modal {
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            max-width: 500px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            transform: translateY(20px);
+            transition: transform 0.3s ease;
+        }
+        .popup-overlay.active .popup-modal {
+            transform: translateY(0);
+        }
+        /* Floating Buttons */
+        .floating-button {
+            position: fixed;
+            z-index: 999;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            transition: all 0.3s ease;
+        }
+        .floating-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+        }
+        .whatsapp-button {
+            background: #25D366;
+            color: white;
+        }
+        .scroll-top-button {
+            background: #0d9488;
+            color: white;
+        }
+        /* Image Gallery */
+        .image-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        .image-grid-item {
+            border-radius: 8px;
+            overflow: hidden;
+            height: 200px;
+            position: relative;
+        }
+        .image-grid-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        .image-grid-item:hover img {
+            transform: scale(1.05);
+        }
+        .image-grid-item::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.2), transparent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .image-grid-item:hover::after {
+            opacity: 1;
+        }
+        @media (max-width: 768px) {
+            .image-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .image-grid-item {
+                height: 150px;
+            }
+        }
+        @media (max-width: 480px) {
+            .image-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body class="text-gray-900 overflow-x-hidden">
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 nav-blur border-b border-gray-100 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center py-4">
+                <!-- Logo -->
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 rounded-lg bg-primary flex items-center justify-center">
+                        <i class="fas fa-cube text-white"></i>
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="text-xl font-bold tracking-tight text-gray-900">ALUFIB</span>
+                        <span class="text-[10px] tracking-[0.15em] font-medium text-gray-500 uppercase">Interiors Pvt Ltd</span>
+                    </div>
+                </div>
+
+                <!-- Desktop Navigation -->
+                <ul class="hidden md:flex items-center space-x-8 text-sm font-medium tracking-wide text-gray-700">
+                    <li><a href="#about" class="hover:text-primary transition-colors duration-300">About</a></li>
+                    <li><a href="#gallery" class="hover:text-primary transition-colors duration-300">Gallery</a></li>
+                    <li><a href="#services" class="hover:text-primary transition-colors duration-300">Services</a></li>
+                    <li><a href="#contact" class="bg-primary text-white px-6 py-2.5 rounded-lg hover:opacity-90 transition-all duration-300 shadow">Get Quote</a></li>
+                </ul>
+
+                <!-- Mobile Menu Button -->
+                <button id="mobile-menu-button" class="md:hidden text-gray-700">
+                    <i class="fas fa-bars text-lg"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="mobile-menu fixed inset-y-0 right-0 w-64 z-50 bg-white shadow-xl p-6 border-l border-gray-100">
+        <div class="flex justify-between items-center mb-10">
+            <div class="flex items-center space-x-2">
+                <div class="w-8 h-8 rounded-lg bg-primary flex items-center justify-center">
+                    <i class="fas fa-cube text-white text-sm"></i>
+                </div>
+                <span class="text-lg font-bold text-gray-900">ALUFIB</span>
+            </div>
+            <button id="close-mobile-menu" class="text-gray-500">
+                <i class="fas fa-times text-lg"></i>
+            </button>
+        </div>
+        <ul class="space-y-6">
+            <li><a href="#about" class="block text-base font-medium text-gray-700 hover:text-primary">About Us</a></li>
+            <li><a href="#gallery" class="block text-base font-medium text-gray-700 hover:text-primary">Gallery</a></li>
+            <li><a href="#services" class="block text-base font-medium text-gray-700 hover:text-primary">Our Services</a></li>
+            <li><a href="#stats" class="block text-base font-medium text-gray-700 hover:text-primary">Experience</a></li>
+            <li><a href="#contact" class="block text-base font-medium text-gray-700 hover:text-primary">Contact</a></li>
+            <li class="pt-4"><a href="#contact" class="block w-full bg-primary text-white text-center py-3 rounded-lg font-medium">Get Quote</a></li>
+        </ul>
+        <div class="absolute bottom-6 left-6 right-6">
+            <div class="text-sm text-gray-500">
+                <p class="mb-2"><i class="fas fa-phone-alt text-primary mr-2"></i> +91 884 893 7870</p>
+                <p><i class="fas fa-map-marker-alt text-primary mr-2"></i> Kottakkal, Kerala</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <header class="relative min-h-screen flex items-center justify-center overflow-hidden pt-16 hero-background">
+        <!-- Main Content Container -->
+        <div class="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 w-full py-12">
+            <div class="text-center max-w-3xl mx-auto">
+                <!-- Since 1994 Badge -->
+                <div class="inline-flex items-center bg-gray-50 rounded-full px-5 py-2.5 border border-gray-200 mb-8">
+                    <div class="w-2 h-2 bg-primary rounded-full mr-2"></div>
+                    <span class="text-sm font-medium tracking-wider text-gray-700">Since 1994</span>
+                    <div class="w-1 h-1 bg-primary/50 rounded-full mx-3"></div>
+                    <span class="text-sm text-primary font-medium">Precision Engineered</span>
+                </div>
+                
+                <!-- Main Headline -->
+                <div class="mb-8">
+                    <h1 class="font-serif text-4xl sm:text-5xl md:text-6xl leading-tight text-gray-900">
+                        <span class="block">Redefining Modern</span>
+                        <span class="block text-primary">Architecture</span>
+                    </h1>
+                </div>
+                
+                <!-- Description -->
+                <div class="mb-12">
+                    <p class="text-lg text-gray-600 leading-relaxed max-w-2xl mx-auto">
+                        World-class aluminium facades, guillotine systems, and premium interiors crafted with American & German technology.
+                    </p>
+                </div>
+                
+                <!-- CTA Buttons -->
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <a href="#gallery" class="group bg-primary text-white px-8 py-4 font-semibold rounded-lg hover:opacity-90 transition-all duration-300 shadow-lg hover-lift flex items-center justify-center">
+                        <i class="fas fa-images mr-3"></i>
+                        <span>View Gallery</span>
+                        <i class="fas fa-arrow-right ml-3 group-hover:translate-x-2 transition-transform"></i>
+                    </a>
+                    <button id="open-popup" class="group bg-white text-gray-900 px-8 py-4 font-semibold rounded-lg hover:bg-gray-50 transition-all duration-300 border border-gray-200 shadow hover-lift flex items-center justify-center">
+                        <i class="fas fa-comments mr-3"></i>
+                        <span>Free Consultation</span>
+                        <i class="fas fa-calendar-check ml-3 group-hover:scale-110 transition-transform"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scroll Indicator -->
+        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2">
+            <a href="#gallery" class="flex flex-col items-center text-gray-400 hover:text-primary transition-colors">
+                <span class="text-xs mb-2">View Work</span>
+                <div class="w-6 h-10 border-2 border-gray-300 rounded-full flex justify-center">
+                    <div class="w-1 h-3 bg-primary rounded-full mt-2 animate-bounce"></div>
+                </div>
+            </a>
+        </div>
+    </header>
+
+    <!-- Gallery Section -->
+    <section id="gallery" class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <div class="inline-flex items-center bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-medium uppercase tracking-wide mb-4 border border-primary/20">
+                    <i class="fas fa-images mr-2"></i>
+                    Our Portfolio
+                </div>
+                <h2 class="font-serif text-3xl md:text-4xl text-gray-900 mb-4">Featured Projects</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">A glimpse of our premium aluminium and interior solutions for modern architecture</p>
+            </div>
+
+            <!-- Image Grid - ALL IMAGES FIXED -->
+            <div class="image-grid">
+                <!-- Image 1 -->
+                <div class="image-grid-item">
+                    <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1000" 
+                         alt="Modern Glass Building"
+                         onerror="this.src='https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=1000'">
+                </div>
+                <!-- Image 2 -->
+                <div class="image-grid-item">
+                    <img src="https://images.unsplash.com/photo-1554995207-c18c203602cb?q=80&w=1000" 
+                         alt="Glass Facade"
+                         onerror="this.src='https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=1000'">
+                </div>
+                <!-- Image 3 -->
+                <div class="image-grid-item">
+                    <img src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?q=80&w=1000" 
+                         alt="Office Building"
+                         onerror="this.src='https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=1000'">
+                </div>
+                <!-- Image 4 -->
+                <div class="image-grid-item">
+                    <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=1000" 
+                         alt="Modern Villa"
+                         onerror="this.src='https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=1000'">
+                </div>
+                <!-- Image 5 -->
+                <div class="image-grid-item">
+                    <img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?q=80&w=1000" 
+                         alt="Interior Design"
+                         onerror="this.src='https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=1000'">
+                </div>
+                <!-- Image 6 - FIXED BUILDING EXTERIOR IMAGE -->
+                <div class="image-grid-item">
+                    <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=1000" 
+                         alt="Building Exterior"
+                         onerror="this.src='https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=1000'">
+                </div>
+            </div>
+
+            <div class="text-center mt-8">
+                <button id="open-popup-2" class="inline-flex items-center bg-primary text-white px-6 py-3 rounded-lg hover:opacity-90 transition-all duration-300 shadow hover-lift">
+                    <i class="fas fa-envelope mr-2"></i>
+                    Request Full Portfolio
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section - Centered -->
+    <section id="stats" class="py-16 bg-gray-50">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <div class="inline-flex items-center bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-medium uppercase tracking-wide mb-4 border border-primary/20">
+                    <i class="fas fa-chart-line mr-2"></i>
+                    Our Track Record
+                </div>
+                <h2 class="font-serif text-3xl md:text-4xl text-gray-900 mb-4">Experience & Excellence</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">Decades of delivering premium architectural solutions across South India</p>
+            </div>
+
+            <!-- Centered Stats Grid -->
+            <div class="flex flex-col items-center">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-2xl">
+                    <!-- Years Experience -->
+                    <div class="stat-card rounded-xl p-8 text-center">
+                        <div class="text-5xl font-bold text-primary mb-4">30+</div>
+                        <div class="text-lg font-semibold text-gray-900 mb-2">Years Experience</div>
+                        <div class="text-gray-600">Three decades of architectural innovation</div>
+                    </div>
+
+                    <!-- Projects -->
+                    <div class="stat-card rounded-xl p-8 text-center">
+                        <div class="text-5xl font-bold text-primary mb-4">500+</div>
+                        <div class="text-lg font-semibold text-gray-900 mb-2">Projects Completed</div>
+                        <div class="text-gray-600">Successful projects across South India</div>
+                    </div>
+                </div>
+
+                <!-- Technology Badges -->
+                <div class="flex flex-wrap justify-center gap-4 mt-8">
+                    <div class="flex items-center bg-primary/10 text-primary px-4 py-2 rounded-full">
+                        <i class="fas fa-flag-usa mr-2"></i>
+                        <span class="font-medium">American Technology</span>
+                    </div>
+                    <div class="flex items-center bg-primary/10 text-primary px-4 py-2 rounded-full">
+                        <i class="fas fa-cogs mr-2"></i>
+                        <span class="font-medium">German Engineering</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <div>
+                    <div class="inline-flex items-center bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-medium uppercase tracking-wide mb-6 border border-primary/20">
+                        <i class="fas fa-building mr-2"></i>
+                        About Our Company
+                    </div>
+                    <h2 class="font-serif text-3xl md:text-4xl text-gray-900 mb-6">Alufib Interiors Private Limited</h2>
+                    <div class="space-y-4 text-gray-600">
+                        <p>For over 30 years, Alufib Interiors has been at the forefront of architectural innovation, delivering premium aluminium and interior solutions across South India.</p>
+                        <p>We combine American precision with German technology to create spaces that are not just beautiful, but also functional, durable, and sustainable.</p>
+                    </div>
+                    
+                    <!-- Company Info Cards -->
+                    <div class="grid grid-cols-2 gap-4 mt-8">
+                        <div class="bg-gray-50 p-4 rounded-lg border border-gray-100">
+                            <div class="text-sm text-gray-500 mb-1">GST Number</div>
+                            <div class="font-mono text-sm font-semibold text-primary">32AAMCA0936E1Z2</div>
+                        </div>
+                        <div class="bg-gray-50 p-4 rounded-lg border border-gray-100">
+                            <div class="text-sm text-gray-500 mb-1">Founded</div>
+                            <div class="font-semibold text-primary">1994</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="relative">
+                    <div class="rounded-xl overflow-hidden shadow-lg">
+                        <img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?q=80&w=2070" 
+                             alt="Alufib Interiors Project" 
+                             class="w-full h-64 object-cover">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="py-16 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <div class="inline-flex items-center bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-medium uppercase tracking-wide mb-4 border border-primary/20">
+                    <i class="fas fa-concierge-bell mr-2"></i>
+                    Our Expertise
+                </div>
+                <h2 class="font-serif text-3xl md:text-4xl text-gray-900 mb-4">Premium Services</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">We offer comprehensive aluminium and interior solutions for residential, commercial, and institutional projects.</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-6">
+                <!-- Service 1: Guillotine Systems -->
+                <div class="service-card rounded-xl overflow-hidden hover-lift">
+                    <div class="h-48 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=2070" 
+                             class="w-full h-full object-cover hover:scale-105 transition-transform duration-500">
+                    </div>
+                    <div class="p-6">
+                        <div class="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
+                            <i class="fas fa-window-maximize text-primary"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-900 mb-3">Guillotine Systems</h3>
+                        <p class="text-gray-600 text-sm mb-4">3 automated shutters sliding upward in a sequence for ultimate elegance and space optimization.</p>
+                        <a href="#contact" class="text-primary font-medium hover:text-primary/80 transition-colors text-sm">
+                            Learn More <i class="fas fa-arrow-right ml-1"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Service 2: Slide Open Doors -->
+                <div class="service-card rounded-xl overflow-hidden hover-lift">
+                    <div class="h-48 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1554995207-c18c203602cb?q=80&w=2070" 
+                             class="w-full h-full object-cover hover:scale-105 transition-transform duration-500">
+                    </div>
+                    <div class="p-6">
+                        <div class="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
+                            <i class="fas fa-door-open text-primary"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-900 mb-3">Slide Open Doors</h3>
+                        <p class="text-gray-600 text-sm mb-4">Ground-breaking trackless systems with dual functionality to slide or open flat seamlessly.</p>
+                        <a href="#contact" class="text-primary font-medium hover:text-primary/80 transition-colors text-sm">
+                            Learn More <i class="fas fa-arrow-right ml-1"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Service 3: Facade Systems -->
+                <div class="service-card rounded-xl overflow-hidden hover-lift">
+                    <div class="h-48 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?q=80&w=2070" 
+                             alt="Modern Building Facade"
+                             class="w-full h-full object-cover hover:scale-105 transition-transform duration-500">
+                    </div>
+                    <div class="p-6">
+                        <div class="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
+                            <i class="fas fa-building text-primary"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-900 mb-3">Facade Systems</h3>
+                        <p class="text-gray-600 text-sm mb-4">High-performance curtain wall systems combining aesthetics with optimal natural light penetration.</p>
+                        <a href="#contact" class="text-primary font-medium hover:text-primary/80 transition-colors text-sm">
+                            Learn More <i class="fas fa-arrow-right ml-1"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <div class="inline-flex items-center bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-medium uppercase tracking-wide mb-4 border border-primary/20">
+                    <i class="fas fa-handshake mr-2"></i>
+                    Get In Touch
+                </div>
+                <h2 class="font-serif text-3xl md:text-4xl text-gray-900 mb-4">Contact Us</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">Visit our office or schedule a consultation for bespoke aluminium and fiber solutions</p>
+            </div>
+
+            <div class="grid lg:grid-cols-2 gap-12">
+                <!-- Contact Info & Map -->
+                <div class="space-y-8">
+                    <!-- Contact Details -->
+                    <div class="space-y-6">
+                        <div class="flex items-start space-x-4">
+                            <div class="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-map-marker-alt text-primary"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-900 mb-1">Our Location</h4>
+                                <p class="text-gray-600">Kottakkal, Malappuram, Kerala, India</p>
+                                <div class="mt-2 text-sm text-gray-500">
+                                    <p>GST: 32AAMCA0936E1Z2</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start space-x-4">
+                            <div class="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-phone-alt text-primary"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-900 mb-1">Phone Number</h4>
+                                <p class="text-gray-600 text-base font-medium">+91 884 893 7870</p>
+                                <p class="text-sm text-gray-500 mt-1">Available 9 AM - 7 PM, Monday to Saturday</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start space-x-4">
+                            <div class="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-envelope text-primary"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-900 mb-1">Email Address</h4>
+                                <p class="text-gray-600">info@alufibinteriors.com</p>
+                                <p class="text-sm text-gray-500 mt-1">We respond within 24 hours</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Google Map -->
+                    <div class="map-container">
+                        <iframe 
+                            src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d15666.153281588984!2d76.00061910324096!3d10.998178522133111!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ba7b4a66b9e1243%3A0x57ad4731fa4b1279!2sKottakkal%2C%20Kerala%2C%20India!5e0!3m2!1sen!2sjp!4v1767081027174!5m2!1sen!2sjp" 
+                            width="100%" 
+                            height="250" 
+                            style="border:0;" 
+                            allowfullscreen="" 
+                            loading="lazy" 
+                            referrerpolicy="no-referrer-when-downgrade">
+                        </iframe>
+                    </div>
+                    
+                    <!-- Social Media -->
+                    <div>
+                        <h4 class="font-semibold text-gray-900 mb-4">Connect With Us</h4>
+                        <div class="flex space-x-3">
+                            <a href="#" class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-gray-600 hover:bg-primary hover:text-white transition-colors">
+                                <i class="fab fa-facebook-f"></i>
+                            </a>
+                            <a href="#" class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-gray-600 hover:bg-primary hover:text-white transition-colors">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                            <a href="#" class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-gray-600 hover:bg-primary hover:text-white transition-colors">
+                                <i class="fab fa-linkedin-in"></i>
+                            </a>
+                            <a href="#" class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-gray-600 hover:bg-primary hover:text-white transition-colors">
+                                <i class="fab fa-youtube"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contact Form -->
+                <div class="contact-card p-8 rounded-xl">
+                    <h3 class="font-serif text-2xl text-gray-900 mb-6">Request a Free Consultation</h3>
+                    <form id="contact-form" class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Your Name *</label>
+                            <input type="text" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none transition" placeholder="John Smith">
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Email Address *</label>
+                            <input type="email" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none transition" placeholder="john@example.com">
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Phone Number *</label>
+                            <input type="tel" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none transition" placeholder="+91 12345 67890">
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Project Type</label>
+                            <select class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none transition">
+                                <option>Select Project Type</option>
+                                <option>Residential Building</option>
+                                <option>Commercial Complex</option>
+                                <option>Office Interior</option>
+                                <option>Guillotine System</option>
+                                <option>Facade System</option>
+                                <option>Complete Renovation</option>
+                                <option>Other</option>
+                            </select>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Message</label>
+                            <textarea class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none transition" rows="3" placeholder="Tell us about your project..."></textarea>
+                        </div>
+                        
+                        <button type="submit" class="w-full bg-primary text-white py-3 font-medium rounded-lg hover:opacity-90 transition-all duration-300 shadow hover-lift">
+                            <i class="fas fa-paper-plane mr-2"></i>
+                            Send Inquiry
+                        </button>
+                        
+                        <p class="text-xs text-gray-500 text-center mt-3">
+                            By submitting this form, you agree to our Terms of Service and Privacy Policy.
+                        </p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Company Info -->
+                <div>
+                    <div class="flex items-center space-x-3 mb-4">
+                        <div class="w-8 h-8 rounded-lg bg-primary flex items-center justify-center">
+                            <i class="fas fa-cube text-white"></i>
+                        </div>
+                        <div>
+                            <div class="text-lg font-semibold text-white">ALUFIB INTERIORS</div>
+                            <div class="text-xs text-gray-400 uppercase tracking-wider">Private Limited</div>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 text-sm mb-3">Crafting Excellence in Architecture Since 1994</p>
+                    <div class="bg-gray-800 inline-flex items-center px-3 py-1 rounded-full text-xs font-medium">
+                        <i class="fas fa-file-invoice-dollar mr-2 text-primary"></i>
+                        GST: 32AAMCA0936E1Z2
+                    </div>
+                </div>
+                
+                <!-- Quick Links -->
+                <div>
+                    <h4 class="font-semibold text-white mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#about" class="text-gray-400 hover:text-white transition-colors text-sm">About Us</a></li>
+                        <li><a href="#gallery" class="text-gray-400 hover:text-white transition-colors text-sm">Gallery</a></li>
+                        <li><a href="#services" class="text-gray-400 hover:text-white transition-colors text-sm">Services</a></li>
+                        <li><a href="#stats" class="text-gray-400 hover:text-white transition-colors text-sm">Experience</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Contact Footer -->
+                <div>
+                    <h4 class="font-semibold text-white mb-4">Contact Info</h4>
+                    <div class="space-y-2 text-gray-400 text-sm">
+                        <p class="flex items-start">
+                            <i class="fas fa-map-marker-alt text-primary mt-0.5 mr-2"></i>
+                            <span>Kottakkal, Malappuram, Kerala, India</span>
+                        </p>
+                        <p class="flex items-center">
+                            <i class="fas fa-phone-alt text-primary mr-2"></i>
+                            <span>+91 884 893 7870</span>
+                        </p>
+                        <p class="flex items-center">
+                            <i class="fas fa-envelope text-primary mr-2"></i>
+                            <span>info@alufibinteriors.com</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-8 pt-6 text-center">
+                <div class="text-sm text-gray-400 mb-1">© 2025 Alufib Interiors Private Limited. All Rights Reserved.</div>
+                <div class="text-xs text-gray-500">Designed with precision and crafted with excellence</div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Popup Form -->
+    <div id="popup-overlay" class="popup-overlay">
+        <div class="popup-modal">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-2xl font-bold text-gray-900">Get Free Consultation</h3>
+                <button id="close-popup" class="text-gray-500 hover:text-gray-700">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            
+            <p class="text-gray-600 mb-6">Fill in your details and our expert will contact you within 24 hours.</p>
+            
+            <form id="popup-form" class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Full Name *</label>
+                    <input type="text" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none transition" placeholder="Enter your full name">
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Email Address *</label>
+                    <input type="email" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none transition" placeholder="Enter your email">
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Phone Number *</label>
+                    <input type="tel" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none transition" placeholder="+91 12345 67890">
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Project Type *</label>
+                    <select required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none transition">
+                        <option value="">Select project type</option>
+                        <option>Residential Building</option>
+                        <option>Commercial Complex</option>
+                        <option>Office Interior</option>
+                        <option>Guillotine System</option>
+                        <option>Facade System</option>
+                        <option>Complete Renovation</option>
+                        <option>Other</option>
+                    </select>
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Project Requirements</label>
+                    <textarea class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none transition" rows="3" placeholder="Describe your project requirements..."></textarea>
+                </div>
+                
+                <button type="submit" class="w-full bg-primary text-white py-3 font-medium rounded-lg hover:opacity-90 transition-all duration-300 shadow hover-lift">
+                    <i class="fas fa-paper-plane mr-2"></i>
+                    Submit & Get Free Quote
+                </button>
+                
+                <p class="text-xs text-gray-500 text-center mt-3">
+                    We respect your privacy. Your information is safe with us.
+                </p>
+            </form>
+        </div>
+    </div>
+
+    <!-- Floating WhatsApp Button -->
+    <a href="https://wa.me/918848937870" target="_blank" class="floating-button whatsapp-button bottom-6 right-6 w-14 h-14 rounded-full flex items-center justify-center text-2xl">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <!-- Floating Scroll to Top Button -->
+    <button id="scroll-top" class="floating-button scroll-top-button bottom-24 right-6 w-12 h-12 rounded-full flex items-center justify-center text-xl opacity-0 transition-opacity">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <!-- JavaScript -->
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const closeMobileMenu = document.getElementById('close-mobile-menu');
+        
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.add('open');
+        });
+        
+        closeMobileMenu.addEventListener('click', () => {
+            mobileMenu.classList.remove('open');
+        });
+        
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', (event) => {
+            if (!mobileMenu.contains(event.target) && !mobileMenuButton.contains(event.target)) {
+                mobileMenu.classList.remove('open');
+            }
+        });
+
+        // Popup Form Logic
+        const popupOverlay = document.getElementById('popup-overlay');
+        const openPopupBtn = document.getElementById('open-popup');
+        const openPopupBtn2 = document.getElementById('open-popup-2');
+        const closePopupBtn = document.getElementById('close-popup');
+        const popupForm = document.getElementById('popup-form');
+        
+        // Open popup when "Free Consultation" button is clicked
+        openPopupBtn.addEventListener('click', () => {
+            popupOverlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+        
+        // Open popup when "Request Full Portfolio" button is clicked
+        openPopupBtn2.addEventListener('click', () => {
+            popupOverlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+        
+        // Close popup when X button is clicked
+        closePopupBtn.addEventListener('click', () => {
+            popupOverlay.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        });
+        
+        // Close popup when clicking outside the modal
+        popupOverlay.addEventListener('click', (event) => {
+            if (event.target === popupOverlay) {
+                popupOverlay.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+        });
+        
+        // Handle popup form submission
+        popupForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            // Show success message
+            const button = popupForm.querySelector('button[type="submit"]');
+            const originalText = button.innerHTML;
+            
+            button.innerHTML = '<i class="fas fa-check mr-2"></i> Thank You! We\'ll Contact You Soon';
+            button.classList.remove('bg-primary');
+            button.classList.add('bg-green-600');
+            button.disabled = true;
+            
+            // Reset form and close popup after 3 seconds
+            setTimeout(() => {
+                button.innerHTML = originalText;
+                button.classList.add('bg-primary');
+                button.classList.remove('bg-green-600');
+                button.disabled = false;
+                popupForm.reset();
+                popupOverlay.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }, 3000);
+        });
+
+        // Handle main contact form submission
+        const contactForm = document.getElementById('contact-form');
+        if (contactForm) {
+            contactForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                
+                const button = contactForm.querySelector('button[type="submit"]');
+                const originalText = button.innerHTML;
+                
+                button.innerHTML = '<i class="fas fa-check mr-2"></i> Message Sent!';
+                button.classList.remove('bg-primary');
+                button.classList.add('bg-green-600');
+                button.disabled = true;
+                
+                setTimeout(() => {
+                    button.innerHTML = originalText;
+                    button.classList.add('bg-primary');
+                    button.classList.remove('bg-green-600');
+                    button.disabled = false;
+                    contactForm.reset();
+                }, 3000);
+            });
+        }
+
+        // Scroll to Top Button
+        const scrollTopBtn = document.getElementById('scroll-top');
+        
+        window.addEventListener('scroll', () => {
+            // Navbar shadow
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 50) {
+                nav.classList.add('shadow-md');
+            } else {
+                nav.classList.remove('shadow-md');
+            }
+            
+            // Show/hide scroll to top button
+            if (window.scrollY > 300) {
+                scrollTopBtn.style.opacity = '1';
+            } else {
+                scrollTopBtn.style.opacity = '0';
+            }
+        });
+        
+        scrollTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+        // Auto-open popup IMMEDIATELY on load
+window.addEventListener('load', () => {
+    // We remove the localStorage check so it shows every time for your testing
+    // To restore "once per user" later, wrap this in the if(!localStorage...) check again.
+    
+    setTimeout(() => {
+        const popupOverlay = document.getElementById('popup-overlay');
+        popupOverlay.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }, 2000); // 0.5 second slight delay for smooth transition
+});
+
+        // Auto-open popup after 5 seconds
+        // setTimeout(() => {
+        //     if (!localStorage.getItem('popupShown')) {
+        //         popupOverlay.classList.add('active');
+        //         document.body.style.overflow = 'hidden';
+        //         localStorage.setItem('popupShown', 'true');
+        //     }
+        // }, 3000);
+    </script>
+</body>
+</html>
